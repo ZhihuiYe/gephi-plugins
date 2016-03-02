@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+OpenIDE-Module-Name: MyGephiPlugin
+OpenIDE-Module-Requires: org.openide.windows.WindowManager
+OpenIDE-Module-Short-Description: My first gephi plugin
+OpenIDE-Module-Long-Description: Long description
+OpenIDE-Module-Display-Category: Tool
