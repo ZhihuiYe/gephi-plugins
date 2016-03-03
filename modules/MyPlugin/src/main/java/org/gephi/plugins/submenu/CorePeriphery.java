@@ -73,17 +73,6 @@ public final class CorePeriphery implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //Do something, display a message
-        //NotifyDescriptor d = new NotifyDescriptor.Message("Hello...now trying to display a dialog", NotifyDescriptor.INFORMATION_MESSAGE);
-        //DialogDisplayer.getDefault().notify(d);
-
-        //Do something - for instance display a dialog
-        //Dialogs API documentation: http://bits.netbeans.org/dev/javadoc/org-openide-dialogs/index.html?overview-summary.html
-        //DialogDescriptor dd = new DialogDescriptor(new MyPanelTopComponent(), "My Dialog", false, null);
-        //DialogDisplayer.getDefault().notify(dd);
-        
-        //CutsonJFrameBuiler builder = new CutsonJFrameBuiler(jframe);
-        //builder.build();
         JFrame jframe = new JFrame();
         MyPanelTopComponent myPanel = new MyPanelTopComponent();jframe.setLayout(new BorderLayout());
         jframe.add(myPanel);
