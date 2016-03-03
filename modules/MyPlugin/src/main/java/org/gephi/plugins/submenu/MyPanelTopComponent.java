@@ -1755,7 +1755,8 @@ public final class MyPanelTopComponent extends TopComponent {
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
         System.out.println("Default pressed.");
         jTextField5.setText("0.01");
-        jTextField6.setText("0.01");        // TODO add your handling code here:
+        jTextField6.setText("0.01");
+        System.out.println("set default done.");
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jComboBox10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox10ActionPerformed
@@ -1769,6 +1770,7 @@ public final class MyPanelTopComponent extends TopComponent {
     private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
         System.out.println("Default pressed.");
         jTextField7.setText("100");        // TODO add your handling code here:
+        System.out.println("set default done.");
     }//GEN-LAST:event_jButton23ActionPerformed
 
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
@@ -1813,6 +1815,7 @@ public final class MyPanelTopComponent extends TopComponent {
         cp_directed.run(a, ai, b, bi, oa, oai, step, T
                     , stopT, cool, maxRej, maxTries, maxSuc
                     , graphtype, algo, trans);
+        System.out.println("go done.");
     }//GEN-LAST:event_jButton24ActionPerformed
 
     private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
@@ -1833,6 +1836,7 @@ public final class MyPanelTopComponent extends TopComponent {
         jTextField11.setText("1000");
         jTextField12.setText("300");
         jTextField13.setText("20");
+        System.out.println("set default done.");
     }//GEN-LAST:event_jButton25ActionPerformed
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
@@ -1843,6 +1847,7 @@ public final class MyPanelTopComponent extends TopComponent {
         jTextField11.setText("1000");
         jTextField12.setText("300");
         jTextField13.setText("20");
+        System.out.println("set default done.");
     }//GEN-LAST:event_jButton26ActionPerformed
 
     private void jTextField47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField47ActionPerformed

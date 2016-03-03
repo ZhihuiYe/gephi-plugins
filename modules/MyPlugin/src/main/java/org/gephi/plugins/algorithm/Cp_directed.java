@@ -1,6 +1,7 @@
 package org.gephi.plugins.algorithm;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -42,8 +43,13 @@ public class Cp_directed {
     
     public void run(double a, double ai, double b, double bi, double oa, double oai, Integer step, double T
                     , double stopT, double cool, int maxRej, int maxTries, int maxSuc
-                    , int graphtype, int algo, int trans)
+                    , int graphtype, int algo, int trans) 
     {
+        System.out.println("a=" + a + ", ai=" + ai + ", b=" + b + ", bi=" + bi + ", oa=" + oa
+                     + ", oai=" + oai + ", step=" + step + ", T=" + T 
+                     + ", stopT=" + stopT + ", cool=" + cool + ", maxRej=" + maxRej 
+                     + ", maxTries=" + maxTries + ", maxSuc=" + maxSuc 
+                     + ", graphtype=" + graphtype + ", algo=" + algo + ", trans=" + trans);
         N = 0;
         this.graphtype = graphtype;
         this.selectedalgo = algo;
@@ -51,7 +57,7 @@ public class Cp_directed {
         
         double[][] B = new double[250][250];
         countrynames = new String[250];
-        
+
         try {
             if(graphtype == 1)//directed 
             {
@@ -347,6 +353,8 @@ public class Cp_directed {
         } catch (FileNotFoundException fe){
             System.out.println("Cannot file required files: " + fe.toString());
             return;
+        } catch (IOException e) {
+            System.out.println("In run function:" + e.toString());
         } catch (Exception e) {
             System.out.println("Read file error: " + e.toString());
             return;
