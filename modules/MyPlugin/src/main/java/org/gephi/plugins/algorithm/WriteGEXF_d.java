@@ -9,7 +9,14 @@ package org.gephi.plugins.algorithm;
  *
  * @author Cecilia
  */
+import com.sun.org.apache.xml.internal.security.transforms.TransformationException;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.URI;
+import java.net.URL;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Set;
@@ -23,6 +30,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.openide.util.Utilities;
 import org.w3c.dom.DOMException;
 
 import org.w3c.dom.Document;
@@ -31,8 +39,11 @@ import org.w3c.dom.Node;
 
 public class WriteGEXF_d
 {
-    public static void praser(double[][] A, double[] CS_o, double[] CS_i, int N, String[] countries)
+    public WriteGEXF_d(){}
+    
+    public void praser(double[][] A, double[] CS_o, double[] CS_i, int N, String[] countries)
     {
+        System.out.println("####Start writing GEXF file. (driected)");
         DocumentBuilderFactory icFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder icBuilder;
         try {
@@ -80,17 +91,55 @@ public class WriteGEXF_d
             graphEle.appendChild(edgesEle);
             
             mainRootElement.appendChild(graphEle);
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            TransformerFactory transformerF = TransformerFactory.newInstance();
+            //Transformer transformer = transformerF.newTransformer();
+            //transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             
             DOMSource source = new DOMSource(doc);
-            StreamResult console = new StreamResult(new File("output.gexf"));
-            transformer.transform(source, console);
+            System.out.println("###########");
+            System.out.println(source.toString());
+            System.out.println("###########");
+            //File newGEXFfile = Utilities.toFile(new URI("file:/Users/Cecilia/Desktop/output.gexf"));
+            /*
+            if (newGEXFfile == null)
+                System.out.println("Cannot create a new GEXF file.");
+            else 
+                System.out.println("new GEXF file created");
+            if (newGEXFfile.exists())
+                System.out.println("NEW GEXF file does exists");
+            System.out.println("New file name:" + newGEXFfile.getName());
+            System.out.println("Path: " + newGEXFfile.getPath());
+            System.out.println("Usable space: " + newGEXFfile.getUsableSpace());
+            System.out.println("To URL:" + Utilities.toURI(newGEXFfile).toString());
             
-            System.out.println("\nXML DOM Created Successfully..");
-        }catch (ParserConfigurationException | DOMException
-        | IllegalArgumentException | TransformerException e)
-        {
+            StreamResult console = new StreamResult(newGEXFfile);
+            System.out.println("StreamResult created.");
+            */
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            StringWriter writer = new StringWriter();
+            transformer.transform(new DOMSource(doc), new StreamResult(writer));
+            String output = writer.getBuffer().toString().replaceAll("\n|\r", "");
+            System.out.println("OUTPUT: " + output);
+            FileWriter fileWriter = new FileWriter(new File("/Users/Cecilia/Desktop/output.gexf"));
+            fileWriter.write(output);
+            fileWriter.flush();
+            fileWriter.close();
+            
+            //transformer.transform(source, console);
+            
+            System.out.println("\n#####XML DOM Created Successfully:/Users/Cecilia/Desktop/output.gexf");
+        }catch (ParserConfigurationException e){
+            System.out.println("#####ParseConfigurationException: " + e.toString());
+        }catch(IllegalArgumentException e){
+            System.out.println("#####IllegalArgumentException: " + e.getMessage());
+        }catch(TransformerException e) {
+            System.out.printf("####Trace: ");
+            e.printStackTrace();
+            System.out.println("#####TransformerException: " + e.toString() );
+        }catch(Exception e){
+            System.out.println("#####WriteGEXF Error!!!!....");
             e.printStackTrace();
         }
     }//praser

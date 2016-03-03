@@ -31,8 +31,10 @@ import org.w3c.dom.Node;
 
 public class WriteGEXF
 {
-    public static void praser(double[][] A, double[] CS, int N, String[] countries)
+    public WriteGEXF(){}
+    public void praser(double[][] A, double[] CS, int N, String[] countries)
     {
+        System.out.println("####Start writing GEXF file. undirected");
         DocumentBuilderFactory icFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder icBuilder;
         try {
@@ -83,13 +85,14 @@ public class WriteGEXF
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             
             DOMSource source = new DOMSource(doc);
-            StreamResult console = new StreamResult(new File("output.gexf"));
+            StreamResult console = new StreamResult(new File("/Users/Cecilia/Desktop/output.gexf"));
             transformer.transform(source, console);
             
-            System.out.println("\nXML DOM Created Successfully..");
+            System.out.println("\nXML DOM Created Successfully:/Users/Cecilia/Desktop/output.gexf");
         }catch (ParserConfigurationException | DOMException
         | IllegalArgumentException | TransformerException e)
         {
+            System.out.println("#####WriteGEXF Error!!!!....");
             e.printStackTrace();
         }
     }//praser

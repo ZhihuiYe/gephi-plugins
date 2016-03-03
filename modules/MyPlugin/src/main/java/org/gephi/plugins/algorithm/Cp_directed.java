@@ -2,6 +2,8 @@ package org.gephi.plugins.algorithm;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -50,6 +52,7 @@ public class Cp_directed {
                      + ", stopT=" + stopT + ", cool=" + cool + ", maxRej=" + maxRej 
                      + ", maxTries=" + maxTries + ", maxSuc=" + maxSuc 
                      + ", graphtype=" + graphtype + ", algo=" + algo + ", trans=" + trans);
+        
         N = 0;
         this.graphtype = graphtype;
         this.selectedalgo = algo;
@@ -58,13 +61,15 @@ public class Cp_directed {
         double[][] B = new double[250][250];
         countrynames = new String[250];
 
+        String basePath = "/Users/Cecilia/Desktop/Cecilia/Project/gephi-plugins/modules/MyPlugin/src/main/resources/org/gephi/plugins/csvfiles/";
+        
         try {
             if(graphtype == 1)//directed 
             {
                 ReadCSV_d csvreader = new ReadCSV_d();
-                csvreader.readfile("table-b4-ad.csv");
-                csvreader.readfile("table-b4-af.csv");
-                csvreader.readfile("table-b4-al.csv");
+                csvreader.readfile(basePath + "table-b4-ad.csv");
+                //csvreader.readfile(basePath + "table-b4-af.csv");
+                //csvreader.readfile(basePath + "table-b4-al.csv");
                 /*csvreader.readfile("table-b4-am.csv");
                 csvreader.readfile("table-b4-ao.csv");
                 csvreader.readfile("table-b4-ar.csv");
@@ -210,7 +215,7 @@ public class Cp_directed {
             {
                 ReadCSV csvreader = new ReadCSV();
                 csvreader.readfile("table-b4-ad.csv");
-                csvreader.readfile("table-b4-af.csv");
+                //csvreader.readfile("table-b4-af.csv");
                 /*csvreader.readfile("table-b4-al.csv");
                 csvreader.readfile("table-b4-am.csv");
                 csvreader.readfile("table-b4-ao.csv");
@@ -474,10 +479,12 @@ public class Cp_directed {
             calculateCS();
         
         if(graphtype == 1)
-            WriteGEXF_d.praser(A,CS_out,CS_in,N,countrynames);
+            
+            new WriteGEXF_d().praser(A,CS_out,CS_in,N,countrynames);
         else
-            WriteGEXF.praser(A,CS,N,countrynames);
+            new WriteGEXF().praser(A,CS,N,countrynames);
         
+        System.out.println("End of Cp_directed.run method.");
     }//main
     
     private  double getRValue_d(double[] source, double[] target)
