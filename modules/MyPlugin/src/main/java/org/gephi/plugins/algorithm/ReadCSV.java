@@ -34,6 +34,8 @@ public class ReadCSV{
                 index1 = N;
                 N++;
             }//if
+            else 
+                index1 = countries.indexOf(source);
             
             for (int i = 0; i < 3; i++)
                 records.readRecord();

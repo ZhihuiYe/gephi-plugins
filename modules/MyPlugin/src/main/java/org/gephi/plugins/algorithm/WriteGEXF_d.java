@@ -121,7 +121,7 @@ public class WriteGEXF_d
             StringWriter writer = new StringWriter();
             transformer.transform(new DOMSource(doc), new StreamResult(writer));
             String output = writer.getBuffer().toString().replaceAll("\n|\r", "");
-            System.out.println("OUTPUT: " + output);
+            //System.out.println("OUTPUT: " + output);
             FileWriter fileWriter = new FileWriter(new File("/Users/Cecilia/Desktop/output.gexf"));
             fileWriter.write(output);
             fileWriter.flush();

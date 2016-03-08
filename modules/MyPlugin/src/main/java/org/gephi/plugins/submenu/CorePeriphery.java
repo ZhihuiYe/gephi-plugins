@@ -26,9 +26,12 @@ public final class CorePeriphery implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JFrame jframe = new JFrame();
-        MyPanelTopComponent myPanel = new MyPanelTopComponent();jframe.setLayout(new BorderLayout());
+        CP_GUITopComponent myPanel = new CP_GUITopComponent();
+        jframe.setLayout(new BorderLayout());
         jframe.add(myPanel);
-        jframe.setSize(900, 600);
+        jframe.setSize(1100, 600);
         jframe.setVisible(true);
+
+        
     }
 }
