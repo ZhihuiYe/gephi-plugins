@@ -13,7 +13,7 @@ public class ReadCSV{
     private static double[][] A = new double[250][250];
     ArrayList<String> countries= new ArrayList<>();
     
-    public void readfile(String filename) throws FileNotFoundException, IOException
+    public void readfile(String filename,int year) throws FileNotFoundException, IOException
     {
         try {
             CsvReader records = new CsvReader(filename);
@@ -47,7 +47,10 @@ public class ReadCSV{
             {
                 Double amount;
                 try{
-                    amount = Double.parseDouble(records.get(records.getColumnCount()-1));
+                    if(year == 0)
+                        amount = Double.parseDouble(records.get(records.getColumnCount()-1));
+                    else
+                        amount = Double.parseDouble(records.get(records.getColumnCount()-(4+(year-1)*4)));
                 }catch(IOException | NumberFormatException e){
                     amount = 0.0;
                 }//catch

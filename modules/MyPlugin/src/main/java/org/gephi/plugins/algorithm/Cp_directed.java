@@ -32,10 +32,18 @@ public class Cp_directed {
     private  int maxRej;
     private  int maxTries;
     private  int maxSuc;
+    private int eu;
+    private int asia;
+    private int africa;
+    private int na;
+    private int sa;
+    private int oc;
+    private int anta;
     
     private  int graphtype; //1->directed 2->undirected
     private  int selectedalgo;//1->greedy 2->SA
     private  int selectedtrans;//1->sharp 2->smooth 3->one-parameter
+    private int year;
     
     private  ArrayList<RValue> RValues = new ArrayList<>();
     private  String[] countrynames;
@@ -45,18 +53,21 @@ public class Cp_directed {
     
     public void run(double a, double ai, double b, double bi, double oa, double oai, Integer step, double T
                     , double stopT, double cool, int maxRej, int maxTries, int maxSuc
-                    , int graphtype, int algo, int trans) 
+                    , int graphtype, int algo, int trans,int eu, int asia, int africa, int na, int sa, int oc, int anta,int year) throws IOException 
     {
         System.out.println("a=" + a + ", ai=" + ai + ", b=" + b + ", bi=" + bi + ", oa=" + oa
                      + ", oai=" + oai + ", step=" + step + ", T=" + T 
                      + ", stopT=" + stopT + ", cool=" + cool + ", maxRej=" + maxRej 
                      + ", maxTries=" + maxTries + ", maxSuc=" + maxSuc 
-                     + ", graphtype=" + graphtype + ", algo=" + algo + ", trans=" + trans);
+                     + ", graphtype=" + graphtype + ", algo=" + algo + ", trans=" + trans + ",year =" + year
+                     + ", eu = "+ eu + ", asia = "+asia + "africa = "+ africa + ",north america = "+ na
+                     + ",south america= "+ sa + ",oceania = "+ oc+", antarctica = "+anta );
         
         N = 0;
         this.graphtype = graphtype;
         this.selectedalgo = algo;
         this.selectedtrans = trans;
+        this.year = year;
         
         double[][] B = new double[250][250];
         countrynames = new String[250];
@@ -67,142 +78,170 @@ public class Cp_directed {
             if(graphtype == 1)//directed 
             {
                 ReadCSV_d csvreader = new ReadCSV_d();
-                csvreader.readfile(basePath +"table-b4-ad.csv");
-                /*csvreader.readfile(basePath +"table-b4-ae.csv");
-                csvreader.readfile(basePath +"table-b4-af.csv");
-                csvreader.readfile(basePath +"table-b4-al.csv");
-                csvreader.readfile(basePath +"table-b4-am.csv");
-                csvreader.readfile(basePath +"table-b4-ao.csv");
-                csvreader.readfile(basePath +"table-b4-ar.csv");
-                csvreader.readfile(basePath +"table-b4-at.csv");
-                csvreader.readfile(basePath +"table-b4-au.csv");
-                csvreader.readfile(basePath +"table-b4-aw.csv");
-                csvreader.readfile(basePath +"table-b4-az.csv");
-            csvreader.readfile(basePath +"table-b4-ba.csv");
-            csvreader.readfile(basePath +"table-b4-bb.csv");
-            csvreader.readfile(basePath +"table-b4-bd.csv");
-            csvreader.readfile(basePath +"table-b4-be.csv");
-            csvreader.readfile(basePath +"table-b4-bf.csv");
-            csvreader.readfile(basePath +"table-b4-bg.csv");
-            csvreader.readfile(basePath +"table-b4-bh.csv");
-            csvreader.readfile(basePath +"table-b4-bi.csv");
-            csvreader.readfile(basePath +"table-b4-bj.csv");
-            csvreader.readfile(basePath +"table-b4-bm.csv");
-            csvreader.readfile(basePath +"table-b4-bn.csv");
-            csvreader.readfile(basePath +"table-b4-bo.csv");
-            csvreader.readfile(basePath +"table-b4-br.csv");
-            csvreader.readfile(basePath +"table-b4-bs.csv");
-            csvreader.readfile(basePath +"table-b4-bt.csv");
-            csvreader.readfile(basePath +"table-b4-bw.csv");
-            csvreader.readfile(basePath +"table-b4-by.csv");
-            csvreader.readfile(basePath +"table-b4-bz.csv");
-            csvreader.readfile(basePath +"table-b4-ca.csv");
-            csvreader.readfile(basePath +"table-b4-cd.csv");
-            csvreader.readfile(basePath +"table-b4-ch.csv");
-            csvreader.readfile(basePath +"table-b4-ci.csv");
-            csvreader.readfile(basePath +"table-b4-cl.csv");
-            csvreader.readfile(basePath +"table-b4-cm.csv");
-            csvreader.readfile(basePath +"table-b4-cn.csv");
-            csvreader.readfile(basePath +"table-b4-co.csv");
-            csvreader.readfile(basePath +"table-b4-cr.csv");
-            csvreader.readfile(basePath +"table-b4-cu.csv");
-            csvreader.readfile(basePath +"table-b4-cv.csv");
-            csvreader.readfile(basePath +"table-b4-cw.csv");
-            csvreader.readfile(basePath +"table-b4-cy.csv");
-            csvreader.readfile(basePath +"table-b4-cz.csv");
-            csvreader.readfile(basePath +"table-b4-de.csv");
-            csvreader.readfile(basePath +"table-b4-dk.csv");
-            csvreader.readfile(basePath +"table-b4-do.csv");
-            csvreader.readfile(basePath +"table-b4-dz.csv");
-            csvreader.readfile(basePath +"table-b4-ec.csv");
-            csvreader.readfile(basePath +"table-b4-ee.csv");
-            csvreader.readfile(basePath +"table-b4-eg.csv");
-            csvreader.readfile(basePath +"table-b4-es.csv");
-            csvreader.readfile(basePath +"table-b4-et.csv");
-            csvreader.readfile(basePath +"table-b4-fi.csv");
-            csvreader.readfile(basePath +"table-b4-fr.csv");
-            csvreader.readfile(basePath +"table-b4-ga.csv");
-            csvreader.readfile(basePath +"table-b4-gb.csv");
-            csvreader.readfile(basePath +"table-b4-ge.csv");
-            csvreader.readfile(basePath +"table-b4-gg.csv");
-            csvreader.readfile(basePath +"table-b4-gh.csv");
-            csvreader.readfile(basePath +"table-b4-gi.csv");
-            csvreader.readfile(basePath +"table-b4-gr.csv");
-            csvreader.readfile(basePath +"table-b4-gt.csv");
-            csvreader.readfile(basePath +"table-b4-hk.csv");
-            csvreader.readfile(basePath +"table-b4-hn.csv");
-            csvreader.readfile(basePath +"table-b4-hr.csv");
-            csvreader.readfile(basePath +"table-b4-hu.csv");
-            csvreader.readfile(basePath +"table-b4-id.csv");
-            csvreader.readfile(basePath +"table-b4-ie.csv");
-            csvreader.readfile(basePath +"table-b4-il.csv");
-            csvreader.readfile(basePath +"table-b4-im.csv");
-            csvreader.readfile(basePath +"table-b4-in.csv");
-            csvreader.readfile(basePath +"table-b4-iq.csv");
-            csvreader.readfile(basePath +"table-b4-is.csv");
-            csvreader.readfile(basePath +"table-b4-it.csv");
-            csvreader.readfile(basePath +"table-b4-je.csv");
-            csvreader.readfile(basePath +"table-b4-jm.csv");
-            csvreader.readfile(basePath +"table-b4-jo.csv");
-            csvreader.readfile(basePath +"table-b4-jp.csv");
-            csvreader.readfile(basePath +"table-b4-ke.csv");
-            csvreader.readfile(basePath +"table-b4-kh.csv");
-            csvreader.readfile(basePath +"table-b4-kr.csv");
-            csvreader.readfile(basePath +"table-b4-kw.csv");
-            csvreader.readfile(basePath +"table-b4-ky.csv");
-            csvreader.readfile(basePath +"table-b4-kz.csv");
-            csvreader.readfile(basePath +"table-b4-lb.csv");
-            csvreader.readfile(basePath +"table-b4-li.csv");
-            csvreader.readfile(basePath +"table-b4-lk.csv");
-            csvreader.readfile(basePath +"table-b4-lr.csv");
-            csvreader.readfile(basePath +"table-b4-lu.csv");
-            csvreader.readfile(basePath +"table-b4-lv.csv");
-            csvreader.readfile(basePath +"table-b4-ly.csv");
-            csvreader.readfile(basePath +"table-b4-ma.csv");
-            csvreader.readfile(basePath +"table-b4-mh.csv");
-            csvreader.readfile(basePath +"table-b4-mn.csv");
-            csvreader.readfile(basePath +"table-b4-mo.csv");
-            csvreader.readfile(basePath +"table-b4-mt.csv");
-            csvreader.readfile(basePath +"table-b4-mu.csv");
-            csvreader.readfile(basePath +"table-b4-mx.csv");
-            csvreader.readfile(basePath +"table-b4-my.csv");
-            csvreader.readfile(basePath +"table-b4-mz.csv");
-            csvreader.readfile(basePath +"table-b4-ng.csv");
-            csvreader.readfile(basePath +"table-b4-ni.csv");
-            csvreader.readfile(basePath +"table-b4-nl.csv");
-            csvreader.readfile(basePath +"table-b4-no.csv");
-            csvreader.readfile(basePath +"table-b4-nz.csv");
-            csvreader.readfile(basePath +"table-b4-om.csv");
-            csvreader.readfile(basePath +"table-b4-pa.csv");
-            csvreader.readfile(basePath +"table-b4-pe.csv");
-            csvreader.readfile(basePath +"table-b4-ph.csv");
-            csvreader.readfile(basePath +"table-b4-pk.csv");
-            csvreader.readfile(basePath +"table-b4-pl.csv");
-            csvreader.readfile(basePath +"table-b4-pt.csv");
-            csvreader.readfile(basePath +"table-b4-qa.csv");
-            csvreader.readfile(basePath +"table-b4-ro.csv");
-            csvreader.readfile(basePath +"table-b4-rs.csv");
-            csvreader.readfile(basePath +"table-b4-ru.csv");
-            csvreader.readfile(basePath +"table-b4-sa.csv");
-            csvreader.readfile(basePath +"table-b4-se.csv");
-            csvreader.readfile(basePath +"table-b4-sg.csv");
-            csvreader.readfile(basePath +"table-b4-si.csv");
-            csvreader.readfile(basePath +"table-b4-sk.csv");
-            csvreader.readfile(basePath +"table-b4-sn.csv");
-            csvreader.readfile(basePath +"table-b4-sv.csv");
-            csvreader.readfile(basePath +"table-b4-th.csv");
-            csvreader.readfile(basePath +"table-b4-tr.csv");
-            csvreader.readfile(basePath +"table-b4-tw.csv");
-            csvreader.readfile(basePath +"table-b4-ua.csv");
-            csvreader.readfile(basePath +"table-b4-us.csv");
-            csvreader.readfile(basePath +"table-b4-uy.csv");
-            csvreader.readfile(basePath +"table-b4-uz.csv");
-            csvreader.readfile(basePath +"table-b4-ve.csv");
-            csvreader.readfile(basePath +"table-b4-vn.csv");
-            csvreader.readfile(basePath +"table-b4-ws.csv");
-            csvreader.readfile(basePath +"table-b4-za.csv");
-            csvreader.readfile(basePath +"table-b4-zm.csv");
-                */
+                
+                
+                if(africa == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-ao.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bf.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bi.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bj.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bw.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cv.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cm.csv",year);
+                    csvreader.readfile(basePath +"table-b4-dz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-eg.csv",year);
+                    csvreader.readfile(basePath +"table-b4-et.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ga.csv",year);
+                    csvreader.readfile(basePath +"table-b4-gh.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ke.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ly.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ma.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mu.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ng.csv",year);
+                    csvreader.readfile(basePath +"table-b4-sn.csv",year);
+                    csvreader.readfile(basePath +"table-b4-zm.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cd.csv",year);
+                    csvreader.readfile(basePath +"table-b4-lr.csv",year);
+                    csvreader.readfile(basePath +"table-b4-za.csv",year);
+                }//africancountries
+                
+                if(na == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-aw.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bb.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bm.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bs.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ca.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cr.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cu.csv",year);
+                    csvreader.readfile(basePath +"table-b4-gt.csv",year);
+                    csvreader.readfile(basePath +"table-b4-hn.csv",year);
+                    csvreader.readfile(basePath +"table-b4-jm.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mx.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ni.csv",year);
+                    csvreader.readfile(basePath +"table-b4-pa.csv",year);
+                    csvreader.readfile(basePath +"table-b4-us.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cw.csv",year);
+                    csvreader.readfile(basePath +"table-b4-do.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ge.csv",year);
+                    csvreader.readfile(basePath +"table-b4-je.csv",year); 
+                    csvreader.readfile(basePath +"table-b4-ky.csv",year);
+                    csvreader.readfile(basePath +"table-b4-sv.csv",year);
+                }//northamericacountries
+                
+                if(sa == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-ar.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bo.csv",year);
+                    csvreader.readfile(basePath +"table-b4-br.csv",year);
+                    csvreader.readfile(basePath +"table-b4-co.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cl.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ec.csv",year);
+                    csvreader.readfile(basePath +"table-b4-pe.csv",year);
+                    csvreader.readfile(basePath +"table-b4-uy.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ci.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ve.csv",year);
+                }//southamericacountries
+                
+                if(oc == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-au.csv",year);
+                    csvreader.readfile(basePath +"table-b4-nz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mh.csv",year); 
+                }//oceaniacountries
+                
+                if(anta == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-ws.csv",year);
+                }//antarcticacountries
+                 if(eu == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-ad.csv",year);
+                    csvreader.readfile(basePath +"table-b4-al.csv",year);
+                    csvreader.readfile(basePath +"table-b4-at.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ba.csv",year);
+                    csvreader.readfile(basePath +"table-b4-be.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bg.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ch.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-de.csv",year);
+                    csvreader.readfile(basePath +"table-b4-dk.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ee.csv",year);
+                    csvreader.readfile(basePath +"table-b4-es.csv",year);
+                    csvreader.readfile(basePath +"table-b4-fi.csv",year);
+                    csvreader.readfile(basePath +"table-b4-fr.csv",year);
+                    csvreader.readfile(basePath +"table-b4-gb.csv",year);
+                    csvreader.readfile(basePath +"table-b4-gr.csv",year);
+                    csvreader.readfile(basePath +"table-b4-hr.csv",year);
+                    csvreader.readfile(basePath +"table-b4-hu.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ie.csv",year);
+                    csvreader.readfile(basePath +"table-b4-is.csv",year);
+                    csvreader.readfile(basePath +"table-b4-it.csv",year);
+                    csvreader.readfile(basePath +"table-b4-lu.csv",year);
+                    csvreader.readfile(basePath +"table-b4-lv.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mt.csv",year);
+                    csvreader.readfile(basePath +"table-b4-nl.csv",year);
+                    csvreader.readfile(basePath +"table-b4-no.csv",year);
+                    csvreader.readfile(basePath +"table-b4-pl.csv",year);
+                    csvreader.readfile(basePath +"table-b4-pt.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ro.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ru.csv",year);
+                    csvreader.readfile(basePath +"table-b4-se.csv",year);
+                    csvreader.readfile(basePath +"table-b4-sk.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ua.csv",year);
+                    csvreader.readfile(basePath +"table-b4-by.csv",year);
+                    csvreader.readfile(basePath +"table-b4-gg.csv",year);
+                    csvreader.readfile(basePath +"table-b4-gi.csv",year);
+                    csvreader.readfile(basePath +"table-b4-im.csv",year);
+                    csvreader.readfile(basePath +"table-b4-li.csv",year);
+                    csvreader.readfile(basePath +"table-b4-rs.csv",year);
+                    csvreader.readfile(basePath +"table-b4-si.csv",year);
+                    csvreader.readfile(basePath +"table-b4-tr.csv",year);
+                }//eucountries
+                
+                if(asia == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-ae.csv",year);
+                    csvreader.readfile(basePath +"table-b4-af.csv",year);
+                    csvreader.readfile(basePath +"table-b4-am.csv",year);
+                    csvreader.readfile(basePath +"table-b4-az.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bd.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bh.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bn.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bt.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cn.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cy.csv",year);
+                    csvreader.readfile(basePath +"table-b4-hk.csv",year);
+                    csvreader.readfile(basePath +"table-b4-id.csv",year);
+                    csvreader.readfile(basePath +"table-b4-il.csv",year);
+                    csvreader.readfile(basePath +"table-b4-in.csv",year);
+                    csvreader.readfile(basePath +"table-b4-iq.csv",year);
+                    csvreader.readfile(basePath +"table-b4-jo.csv",year);
+                    csvreader.readfile(basePath +"table-b4-jp.csv",year);
+                    csvreader.readfile(basePath +"table-b4-kh.csv",year);
+                    csvreader.readfile(basePath +"table-b4-kr.csv",year);
+                    csvreader.readfile(basePath +"table-b4-kw.csv",year);
+                    csvreader.readfile(basePath +"table-b4-kz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-lb.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mn.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mo.csv",year);
+                    csvreader.readfile(basePath +"table-b4-my.csv",year);
+                    csvreader.readfile(basePath +"table-b4-om.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ph.csv",year);
+                    csvreader.readfile(basePath +"table-b4-pk.csv",year);
+                    csvreader.readfile(basePath +"table-b4-qa.csv",year);
+                    csvreader.readfile(basePath +"table-b4-sa.csv",year);
+                    csvreader.readfile(basePath +"table-b4-sg.csv",year);
+                    csvreader.readfile(basePath +"table-b4-th.csv",year);
+                    csvreader.readfile(basePath +"table-b4-tw.csv",year);
+                    csvreader.readfile(basePath +"table-b4-uz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-lk.csv",year);
+                    csvreader.readfile(basePath +"table-b4-vn.csv",year);
+                }//asiacountries
+          
                 N = csvreader.getN();
                 B = csvreader.getA();
                 //checkContent(B);
@@ -216,142 +255,169 @@ public class Cp_directed {
             else//undirected
             {
                 ReadCSV csvreader = new ReadCSV();
-                csvreader.readfile(basePath + "table-b4-ad.csv");
-            /*csvreader.readfile(basePath +"table-b4-ae.csv");
-            csvreader.readfile(basePath +"table-b4-af.csv");
-            csvreader.readfile(basePath +"table-b4-al.csv");
-            csvreader.readfile(basePath +"table-b4-am.csv");
-            csvreader.readfile(basePath +"table-b4-ao.csv");
-            csvreader.readfile(basePath +"table-b4-ar.csv");
-            csvreader.readfile(basePath +"table-b4-at.csv");
-            csvreader.readfile(basePath +"table-b4-au.csv");
-            csvreader.readfile(basePath +"table-b4-aw.csv");
-            csvreader.readfile(basePath +"table-b4-az.csv");
-            csvreader.readfile(basePath +"table-b4-ba.csv");
-            csvreader.readfile(basePath +"table-b4-bb.csv");
-            csvreader.readfile(basePath +"table-b4-bd.csv");
-            csvreader.readfile(basePath +"table-b4-be.csv");
-            csvreader.readfile(basePath +"table-b4-bf.csv");
-            csvreader.readfile(basePath +"table-b4-bg.csv");
-            csvreader.readfile(basePath +"table-b4-bh.csv");
-            csvreader.readfile(basePath +"table-b4-bi.csv");
-            csvreader.readfile(basePath +"table-b4-bj.csv");
-            csvreader.readfile(basePath +"table-b4-bm.csv");
-            csvreader.readfile(basePath +"table-b4-bn.csv");
-            csvreader.readfile(basePath +"table-b4-bo.csv");
-            csvreader.readfile(basePath +"table-b4-br.csv");
-            csvreader.readfile(basePath +"table-b4-bs.csv");
-            csvreader.readfile(basePath +"table-b4-bt.csv");
-            csvreader.readfile(basePath +"table-b4-bw.csv");
-            csvreader.readfile(basePath +"table-b4-by.csv");
-            csvreader.readfile(basePath +"table-b4-bz.csv");
-            csvreader.readfile(basePath +"table-b4-ca.csv");
-            csvreader.readfile(basePath +"table-b4-cd.csv");
-            csvreader.readfile(basePath +"table-b4-ch.csv");
-            csvreader.readfile(basePath +"table-b4-ci.csv");
-            csvreader.readfile(basePath +"table-b4-cl.csv");
-            csvreader.readfile(basePath +"table-b4-cm.csv");
-            csvreader.readfile(basePath +"table-b4-cn.csv");
-            csvreader.readfile(basePath +"table-b4-co.csv");
-            csvreader.readfile(basePath +"table-b4-cr.csv");
-            csvreader.readfile(basePath +"table-b4-cu.csv");
-            csvreader.readfile(basePath +"table-b4-cv.csv");
-            csvreader.readfile(basePath +"table-b4-cw.csv");
-            csvreader.readfile(basePath +"table-b4-cy.csv");
-            csvreader.readfile(basePath +"table-b4-cz.csv");
-            csvreader.readfile(basePath +"table-b4-de.csv");
-            csvreader.readfile(basePath +"table-b4-dk.csv");
-            csvreader.readfile(basePath +"table-b4-do.csv");
-            csvreader.readfile(basePath +"table-b4-dz.csv");
-            csvreader.readfile(basePath +"table-b4-ec.csv");
-            csvreader.readfile(basePath +"table-b4-ee.csv");
-            csvreader.readfile(basePath +"table-b4-eg.csv");
-            csvreader.readfile(basePath +"table-b4-es.csv");
-            csvreader.readfile(basePath +"table-b4-et.csv");
-            csvreader.readfile(basePath +"table-b4-fi.csv");
-            csvreader.readfile(basePath +"table-b4-fr.csv");
-            csvreader.readfile(basePath +"table-b4-ga.csv");
-            csvreader.readfile(basePath +"table-b4-gb.csv");
-            csvreader.readfile(basePath +"table-b4-ge.csv");
-            csvreader.readfile(basePath +"table-b4-gg.csv");
-            csvreader.readfile(basePath +"table-b4-gh.csv");
-            csvreader.readfile(basePath +"table-b4-gi.csv");
-            csvreader.readfile(basePath +"table-b4-gr.csv");
-            csvreader.readfile(basePath +"table-b4-gt.csv");
-            csvreader.readfile(basePath +"table-b4-hk.csv");
-            csvreader.readfile(basePath +"table-b4-hn.csv");
-            csvreader.readfile(basePath +"table-b4-hr.csv");
-            csvreader.readfile(basePath +"table-b4-hu.csv");
-            csvreader.readfile(basePath +"table-b4-id.csv");
-            csvreader.readfile(basePath +"table-b4-ie.csv");
-            csvreader.readfile(basePath +"table-b4-il.csv");
-            csvreader.readfile(basePath +"table-b4-im.csv");
-            csvreader.readfile(basePath +"table-b4-in.csv");
-            csvreader.readfile(basePath +"table-b4-iq.csv");
-            csvreader.readfile(basePath +"table-b4-is.csv");
-            csvreader.readfile(basePath +"table-b4-it.csv");
-            csvreader.readfile(basePath +"table-b4-je.csv");
-            csvreader.readfile(basePath +"table-b4-jm.csv");
-            csvreader.readfile(basePath +"table-b4-jo.csv");
-            csvreader.readfile(basePath +"table-b4-jp.csv");
-            csvreader.readfile(basePath +"table-b4-ke.csv");
-            csvreader.readfile(basePath +"table-b4-kh.csv");
-            csvreader.readfile(basePath +"table-b4-kr.csv");
-            csvreader.readfile(basePath +"table-b4-kw.csv");
-            csvreader.readfile(basePath +"table-b4-ky.csv");
-            csvreader.readfile(basePath +"table-b4-kz.csv");
-            csvreader.readfile(basePath +"table-b4-lb.csv");
-            csvreader.readfile(basePath +"table-b4-li.csv");
-            csvreader.readfile(basePath +"table-b4-lk.csv");
-            csvreader.readfile(basePath +"table-b4-lr.csv");
-            csvreader.readfile(basePath +"table-b4-lu.csv");
-            csvreader.readfile(basePath +"table-b4-lv.csv");
-            csvreader.readfile(basePath +"table-b4-ly.csv");
-            csvreader.readfile(basePath +"table-b4-ma.csv");
-            csvreader.readfile(basePath +"table-b4-mh.csv");
-            csvreader.readfile(basePath +"table-b4-mn.csv");
-            csvreader.readfile(basePath +"table-b4-mo.csv");
-            csvreader.readfile(basePath +"table-b4-mt.csv");
-            csvreader.readfile(basePath +"table-b4-mu.csv");
-            csvreader.readfile(basePath +"table-b4-mx.csv");
-            csvreader.readfile(basePath +"table-b4-my.csv");
-            csvreader.readfile(basePath +"table-b4-mz.csv");
-            csvreader.readfile(basePath +"table-b4-ng.csv");
-            csvreader.readfile(basePath +"table-b4-ni.csv");
-            csvreader.readfile(basePath +"table-b4-nl.csv");
-            csvreader.readfile(basePath +"table-b4-no.csv");
-            csvreader.readfile(basePath +"table-b4-nz.csv");
-            csvreader.readfile(basePath +"table-b4-om.csv");
-            csvreader.readfile(basePath +"table-b4-pa.csv");
-            csvreader.readfile(basePath +"table-b4-pe.csv");
-            csvreader.readfile(basePath +"table-b4-ph.csv");
-            csvreader.readfile(basePath +"table-b4-pk.csv");
-            csvreader.readfile(basePath +"table-b4-pl.csv");
-            csvreader.readfile(basePath +"table-b4-pt.csv");
-            csvreader.readfile(basePath +"table-b4-qa.csv");
-            csvreader.readfile(basePath +"table-b4-ro.csv");
-            csvreader.readfile(basePath +"table-b4-rs.csv");
-            csvreader.readfile(basePath +"table-b4-ru.csv");
-            csvreader.readfile(basePath +"table-b4-sa.csv");
-            csvreader.readfile(basePath +"table-b4-se.csv");
-            csvreader.readfile(basePath +"table-b4-sg.csv");
-            csvreader.readfile(basePath +"table-b4-si.csv");
-            csvreader.readfile(basePath +"table-b4-sk.csv");
-            csvreader.readfile(basePath +"table-b4-sn.csv");
-            csvreader.readfile(basePath +"table-b4-sv.csv");
-            csvreader.readfile(basePath +"table-b4-th.csv");
-            csvreader.readfile(basePath +"table-b4-tr.csv");
-            csvreader.readfile(basePath +"table-b4-tw.csv");
-            csvreader.readfile(basePath +"table-b4-ua.csv");
-            csvreader.readfile(basePath +"table-b4-us.csv");
-            csvreader.readfile(basePath +"table-b4-uy.csv");
-            csvreader.readfile(basePath +"table-b4-uz.csv");
-            csvreader.readfile(basePath +"table-b4-ve.csv");
-            csvreader.readfile(basePath +"table-b4-vn.csv");
-            csvreader.readfile(basePath +"table-b4-ws.csv");
-            csvreader.readfile(basePath +"table-b4-za.csv");
-            csvreader.readfile(basePath +"table-b4-zm.csv");
-            */
+                
+                if(africa == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-ao.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bf.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bi.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bj.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bw.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cv.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cm.csv",year);
+                    csvreader.readfile(basePath +"table-b4-dz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-eg.csv",year);
+                    csvreader.readfile(basePath +"table-b4-et.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ga.csv",year);
+                    csvreader.readfile(basePath +"table-b4-gh.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ke.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ly.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ma.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mu.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ng.csv",year);
+                    csvreader.readfile(basePath +"table-b4-sn.csv",year);
+                    csvreader.readfile(basePath +"table-b4-zm.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cd.csv",year);
+                    csvreader.readfile(basePath +"table-b4-lr.csv",year);
+                    csvreader.readfile(basePath +"table-b4-za.csv",year);
+                }//africancountries
+                
+                if(na == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-aw.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bb.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bm.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bs.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ca.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cr.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cu.csv",year);
+                    csvreader.readfile(basePath +"table-b4-gt.csv",year);
+                    csvreader.readfile(basePath +"table-b4-hn.csv",year);
+                    csvreader.readfile(basePath +"table-b4-jm.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mx.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ni.csv",year);
+                    csvreader.readfile(basePath +"table-b4-pa.csv",year);
+                    csvreader.readfile(basePath +"table-b4-us.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cw.csv",year);
+                    csvreader.readfile(basePath +"table-b4-do.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ge.csv",year);
+                    csvreader.readfile(basePath +"table-b4-je.csv",year); 
+                    csvreader.readfile(basePath +"table-b4-ky.csv",year);
+                    csvreader.readfile(basePath +"table-b4-sv.csv",year);
+                }//northamericacountries
+                
+                if(sa == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-ar.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bo.csv",year);
+                    csvreader.readfile(basePath +"table-b4-br.csv",year);
+                    csvreader.readfile(basePath +"table-b4-co.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cl.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ec.csv",year);
+                    csvreader.readfile(basePath +"table-b4-pe.csv",year);
+                    csvreader.readfile(basePath +"table-b4-uy.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ci.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ve.csv",year);
+                }//southamericacountries
+                
+                if(oc == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-au.csv",year);
+                    csvreader.readfile(basePath +"table-b4-nz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mh.csv",year); 
+                }//oceaniacountries
+                
+                if(anta == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-ws.csv",year);
+                }//antarcticacountries
+                 if(eu == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-ad.csv",year);
+                    csvreader.readfile(basePath +"table-b4-al.csv",year);
+                    csvreader.readfile(basePath +"table-b4-at.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ba.csv",year);
+                    csvreader.readfile(basePath +"table-b4-be.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bg.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ch.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-de.csv",year);
+                    csvreader.readfile(basePath +"table-b4-dk.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ee.csv",year);
+                    csvreader.readfile(basePath +"table-b4-es.csv",year);
+                    csvreader.readfile(basePath +"table-b4-fi.csv",year);
+                    csvreader.readfile(basePath +"table-b4-fr.csv",year);
+                    csvreader.readfile(basePath +"table-b4-gb.csv",year);
+                    csvreader.readfile(basePath +"table-b4-gr.csv",year);
+                    csvreader.readfile(basePath +"table-b4-hr.csv",year);
+                    csvreader.readfile(basePath +"table-b4-hu.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ie.csv",year);
+                    csvreader.readfile(basePath +"table-b4-is.csv",year);
+                    csvreader.readfile(basePath +"table-b4-it.csv",year);
+                    csvreader.readfile(basePath +"table-b4-lu.csv",year);
+                    csvreader.readfile(basePath +"table-b4-lv.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mt.csv",year);
+                    csvreader.readfile(basePath +"table-b4-nl.csv",year);
+                    csvreader.readfile(basePath +"table-b4-no.csv",year);
+                    csvreader.readfile(basePath +"table-b4-pl.csv",year);
+                    csvreader.readfile(basePath +"table-b4-pt.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ro.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ru.csv",year);
+                    csvreader.readfile(basePath +"table-b4-se.csv",year);
+                    csvreader.readfile(basePath +"table-b4-sk.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ua.csv",year);
+                    csvreader.readfile(basePath +"table-b4-by.csv",year);
+                    csvreader.readfile(basePath +"table-b4-gg.csv",year);
+                    csvreader.readfile(basePath +"table-b4-gi.csv",year);
+                    csvreader.readfile(basePath +"table-b4-im.csv",year);
+                    csvreader.readfile(basePath +"table-b4-li.csv",year);
+                    csvreader.readfile(basePath +"table-b4-rs.csv",year);
+                    csvreader.readfile(basePath +"table-b4-si.csv",year);
+                    csvreader.readfile(basePath +"table-b4-tr.csv",year);
+                }//eucountries
+                
+                if(asia == 1)
+                {
+                    csvreader.readfile(basePath +"table-b4-ae.csv",year);
+                    csvreader.readfile(basePath +"table-b4-af.csv",year);
+                    csvreader.readfile(basePath +"table-b4-am.csv",year);
+                    csvreader.readfile(basePath +"table-b4-az.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bd.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bh.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bn.csv",year);
+                    csvreader.readfile(basePath +"table-b4-bt.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cn.csv",year);
+                    csvreader.readfile(basePath +"table-b4-cy.csv",year);
+                    csvreader.readfile(basePath +"table-b4-hk.csv",year);
+                    csvreader.readfile(basePath +"table-b4-id.csv",year);
+                    csvreader.readfile(basePath +"table-b4-il.csv",year);
+                    csvreader.readfile(basePath +"table-b4-in.csv",year);
+                    csvreader.readfile(basePath +"table-b4-iq.csv",year);
+                    csvreader.readfile(basePath +"table-b4-jo.csv",year);
+                    csvreader.readfile(basePath +"table-b4-jp.csv",year);
+                    csvreader.readfile(basePath +"table-b4-kh.csv",year);
+                    csvreader.readfile(basePath +"table-b4-kr.csv",year);
+                    csvreader.readfile(basePath +"table-b4-kw.csv",year);
+                    csvreader.readfile(basePath +"table-b4-kz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-lb.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mn.csv",year);
+                    csvreader.readfile(basePath +"table-b4-mo.csv",year);
+                    csvreader.readfile(basePath +"table-b4-my.csv",year);
+                    csvreader.readfile(basePath +"table-b4-om.csv",year);
+                    csvreader.readfile(basePath +"table-b4-ph.csv",year);
+                    csvreader.readfile(basePath +"table-b4-pk.csv",year);
+                    csvreader.readfile(basePath +"table-b4-qa.csv",year);
+                    csvreader.readfile(basePath +"table-b4-sa.csv",year);
+                    csvreader.readfile(basePath +"table-b4-sg.csv",year);
+                    csvreader.readfile(basePath +"table-b4-th.csv",year);
+                    csvreader.readfile(basePath +"table-b4-tw.csv",year);
+                    csvreader.readfile(basePath +"table-b4-uz.csv",year);
+                    csvreader.readfile(basePath +"table-b4-lk.csv",year);
+                    csvreader.readfile(basePath +"table-b4-vn.csv",year);
+                }//asiacountries
+                
                 N = csvreader.getN();
                 B = csvreader.getA();
                 for(int i=0;i<N;i++)
@@ -369,7 +435,7 @@ public class Cp_directed {
             return;
         }
 
-        System.out.println("!!N:"+ N);
+        //System.out.println("!!N:"+ N);
         
         if(selectedalgo == 1)
         {
@@ -484,17 +550,23 @@ public class Cp_directed {
         else
             calculateCS();
         
+        try{
         if(graphtype == 1)
         {           
-            new WriteGEXF_d().praser(A,CS_out,CS_in,N,countrynames);
+            //new WriteGEXF_d().praser(A,CS_out,CS_in,N,countrynames);
+            new WriteCSVNode_d().praser(CS_out,CS_in,countrynames,N);
+            new WriteCSVEdge_d().praser(A,N);
         }
         else
         {
-            new WriteGEXF().praser(A,CS,N,countrynames);
-            //WriteCSVNode.praser(CS,countrynames,N);
-            //WriteCSVEdge.praser(A,N);
+            //new WriteGEXF().praser(A,CS,N,countrynames);
+            new WriteCSVNode().praser(CS,countrynames,N);
+            new WriteCSVEdge().praser(A,N);
         }
         
+        } catch(Exception e){
+            System.out.println(e.toString());
+        }
         System.out.println("End of Cp_directed.run method.");
     }//main
     

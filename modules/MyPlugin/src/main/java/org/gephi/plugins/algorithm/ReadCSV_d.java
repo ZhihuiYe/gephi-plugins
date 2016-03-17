@@ -13,7 +13,7 @@ public class ReadCSV_d{
     private static double[][] A = new double[250][250];
     ArrayList<String> countries= new ArrayList<>();
     
-    public void readfile(String filename)
+    public void readfile(String filename,int year)
     {
         try {
             CsvReader records = new CsvReader(filename);
@@ -46,8 +46,11 @@ public class ReadCSV_d{
             while (records.readRecord())
             {
                 Double amount;
-                try{
-                    amount = Double.parseDouble(records.get(records.getColumnCount()-1));
+                try{                   
+                    if(year == 0)
+                        amount = Double.parseDouble(records.get(records.getColumnCount()-1));
+                    else
+                        amount = Double.parseDouble(records.get(records.getColumnCount()-(4+(year-1)*4)));
                 }catch(IOException | NumberFormatException e){
                     amount = 0.0;
                 }//catch
